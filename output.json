@@ -1,0 +1,4 @@
+[{"index": 0, "opcode": "load", "arg": "A, 0x01", "term": [1, 0, "load"]},
+ {"index": 1, "opcode": "add", "arg": "A, B", "term": [2, 0, "add"]},
+ {"index": 2, "opcode": "write", "arg": "A", "term": [3, 0, "write"]},
+ {"index": 3, "opcode": "halt", "arg": null, "term": [4, 0, "halt"]}]

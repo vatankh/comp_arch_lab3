@@ -1,0 +1,645 @@
+name: "Hello User Test"
+input:
+  source: |
+    ; Ask for the user's name
+    MOV A, 87        ; W
+    WRITE A
+    MOV A, 104       ; h
+    WRITE A
+    MOV A, 97        ; a
+    WRITE A
+    MOV A, 116       ; t
+    WRITE A
+    MOV A, 32        ; (space)
+    WRITE A
+    MOV A, 105       ; i
+    WRITE A
+    MOV A, 115       ; s
+    WRITE A
+    MOV A, 32        ; (space)
+    WRITE A
+    MOV A, 121       ; y
+    WRITE A
+    MOV A, 111       ; o
+    WRITE A
+    MOV A, 117       ; u
+    WRITE A
+    MOV A, 114       ; r
+    WRITE A
+    MOV A, 32        ; (space)
+    WRITE A
+    MOV A, 110       ; n
+    WRITE A
+    MOV A, 97        ; a
+    WRITE A
+    MOV A, 109       ; m
+    WRITE A
+    MOV A, 101       ; e
+    WRITE A
+    MOV A, 63        ; ?
+    WRITE A
+    MOV A, 10        ; newline after the question
+    WRITE A
+
+    ; Start of input reading loop
+    MOV B, 0         ; Initialize memory index in B
+
+    READ_LOOP:
+    READ A           ; Read a character from input
+    CMP A, 0         ; Check if the input is a newline (ASCII 10)
+    JZ PRINT_GREETING; If newline, jump to print the greeting
+
+    MOV [B], A       ; Store the input character at memory[B]
+    WRITE A          ; Echo the input character back
+    INC B            ; Move to the next memory location
+    JMP READ_LOOP    ; Continue reading the next character
+
+    MOV [B], 0       ; Store a null terminator at memory[B]
+
+    ; Printing the greeting "Hello, " and the user's name
+    PRINT_GREETING:
+    MOV A, 10        ; Newline after input
+    WRITE A
+    MOV A, 72        ; H
+    WRITE A
+    MOV A, 101       ; e
+    WRITE A
+    MOV A, 108       ; l
+    WRITE A
+    WRITE A          ; l
+    MOV A, 111       ; o
+    WRITE A
+    MOV A, 44        ; ,
+    WRITE A
+    MOV A, 32        ; (space)
+    WRITE A
+
+    ; Print user's name from memory
+    MOV C, 0         ; Initialize memory index in C for printing
+
+    PRINT_NAME_LOOP:
+    MOV A, [C]       ; Load character from memory[C]
+    CMP A, 0         ; Check if it's the end of the name (stored as null)
+    JZ PRINT_DONE    ; If end, jump to finish
+
+    WRITE A          ; Print the character
+    INC C            ; Move to the next memory location
+    JMP PRINT_NAME_LOOP ; Loop to print the next character
+
+    PRINT_DONE:
+    MOV A, 33        ; !
+    WRITE A
+    HALT
+
+input_stream:
+  content: |
+    aleksander the great
+expected_machine_code:
+  - index: 0
+    opcode: "mov"
+    arg: ["A", 87]
+  - index: 1
+    opcode: "write"
+    arg: "A"
+  - index: 2
+    opcode: "mov"
+    arg: ["A", 104]
+  - index: 3
+    opcode: "write"
+    arg: "A"
+  - index: 4
+    opcode: "mov"
+    arg: ["A", 97]
+  - index: 5
+    opcode: "write"
+    arg: "A"
+  - index: 6
+    opcode: "mov"
+    arg: ["A", 116]
+  - index: 7
+    opcode: "write"
+    arg: "A"
+  - index: 8
+    opcode: "mov"
+    arg: ["A", 32]
+  - index: 9
+    opcode: "write"
+    arg: "A"
+  - index: 10
+    opcode: "mov"
+    arg: ["A", 105]
+  - index: 11
+    opcode: "write"
+    arg: "A"
+  - index: 12
+    opcode: "mov"
+    arg: ["A", 115]
+  - index: 13
+    opcode: "write"
+    arg: "A"
+  - index: 14
+    opcode: "mov"
+    arg: ["A", 32]
+  - index: 15
+    opcode: "write"
+    arg: "A"
+  - index: 16
+    opcode: "mov"
+    arg: ["A", 121]
+  - index: 17
+    opcode: "write"
+    arg: "A"
+  - index: 18
+    opcode: "mov"
+    arg: ["A", 111]
+  - index: 19
+    opcode: "write"
+    arg: "A"
+  - index: 20
+    opcode: "mov"
+    arg: ["A", 117]
+  - index: 21
+    opcode: "write"
+    arg: "A"
+  - index: 22
+    opcode: "mov"
+    arg: ["A", 114]
+  - index: 23
+    opcode: "write"
+    arg: "A"
+  - index: 24
+    opcode: "mov"
+    arg: ["A", 32]
+  - index: 25
+    opcode: "write"
+    arg: "A"
+  - index: 26
+    opcode: "mov"
+    arg: ["A", 110]
+  - index: 27
+    opcode: "write"
+    arg: "A"
+  - index: 28
+    opcode: "mov"
+    arg: ["A", 97]
+  - index: 29
+    opcode: "write"
+    arg: "A"
+  - index: 30
+    opcode: "mov"
+    arg: ["A", 109]
+  - index: 31
+    opcode: "write"
+    arg: "A"
+  - index: 32
+    opcode: "mov"
+    arg: ["A", 101]
+  - index: 33
+    opcode: "write"
+    arg: "A"
+  - index: 34
+    opcode: "mov"
+    arg: ["A", 63]
+  - index: 35
+    opcode: "write"
+    arg: "A"
+  - index: 36
+    opcode: "mov"
+    arg: ["A", 10]
+  - index: 37
+    opcode: "write"
+    arg: "A"
+  - index: 38
+    opcode: "mov"
+    arg: ["B", 0]
+  - index: 39
+    opcode: "read"
+    arg: "A"
+  - index: 40
+    opcode: "cmp"
+    arg: "A, 0"
+  - index: 41
+    opcode: "jz"
+    arg: 47
+  - index: 42
+    opcode: "mov"
+    arg: ["[B]", "A"]
+  - index: 43
+    opcode: "write"
+    arg: "A"
+  - index: 44
+    opcode: "inc"
+    arg: "B"
+  - index: 45
+    opcode: "jmp"
+    arg: 39
+  - index: 46
+    opcode: "mov"
+    arg: ["[B]", "0"]
+  - index: 47
+    opcode: "mov"
+    arg: ["A", 10]
+  - index: 48
+    opcode: "write"
+    arg: "A"
+  - index: 49
+    opcode: "mov"
+    arg: ["A", 72]
+  - index: 50
+    opcode: "write"
+    arg: "A"
+  - index: 51
+    opcode: "mov"
+    arg: ["A", 101]
+  - index: 52
+    opcode: "write"
+    arg: "A"
+  - index: 53
+    opcode: "mov"
+    arg: ["A", 108]
+  - index: 54
+    opcode: "write"
+    arg: "A"
+  - index: 55
+    opcode: "write"
+    arg: "A"
+  - index: 56
+    opcode: "mov"
+    arg: ["A", 111]
+  - index: 57
+    opcode: "write"
+    arg: "A"
+  - index: 58
+    opcode: "mov"
+    arg: ["A", 44]
+  - index: 59
+    opcode: "write"
+    arg: "A"
+  - index: 60
+    opcode: "mov"
+    arg: ["A", 32]
+  - index: 61
+    opcode: "write"
+    arg: "A"
+  - index: 62
+    opcode: "mov"
+    arg: ["C", 0]
+  - index: 63
+    opcode: "mov"
+    arg: ["A", "[C]"]
+  - index: 64
+    opcode: "cmp"
+    arg: "A, 0"
+  - index: 65
+    opcode: "jz"
+    arg: 69
+  - index: 66
+    opcode: "write"
+    arg: "A"
+  - index: 67
+    opcode: "inc"
+    arg: "C"
+  - index: 68
+    opcode: "jmp"
+    arg: 63
+  - index: 69
+    opcode: "mov"
+    arg: ["A", 33]
+  - index: 70
+    opcode: "write"
+    arg: "A"
+  - index: 71
+    opcode: "halt"
+expected_log: |
+  INFO:root:Executing: mov at PC=0
+  INFO:root:Executing: write at PC=1
+  INFO:root:Executing: mov at PC=2
+  INFO:root:Executing: write at PC=3
+  INFO:root:Executing: mov at PC=4
+  INFO:root:Executing: write at PC=5
+  INFO:root:Executing: mov at PC=6
+  INFO:root:Executing: write at PC=7
+  INFO:root:Executing: mov at PC=8
+  INFO:root:Executing: write at PC=9
+  INFO:root:Executing: mov at PC=10
+  INFO:root:Executing: write at PC=11
+  INFO:root:Executing: mov at PC=12
+  INFO:root:Executing: write at PC=13
+  INFO:root:Executing: mov at PC=14
+  INFO:root:Executing: write at PC=15
+  INFO:root:Executing: mov at PC=16
+  INFO:root:Executing: write at PC=17
+  INFO:root:Executing: mov at PC=18
+  INFO:root:Executing: write at PC=19
+  INFO:root:Executing: mov at PC=20
+  INFO:root:Executing: write at PC=21
+  INFO:root:Executing: mov at PC=22
+  INFO:root:Executing: write at PC=23
+  INFO:root:Executing: mov at PC=24
+  INFO:root:Executing: write at PC=25
+  INFO:root:Executing: mov at PC=26
+  INFO:root:Executing: write at PC=27
+  INFO:root:Executing: mov at PC=28
+  INFO:root:Executing: write at PC=29
+  INFO:root:Executing: mov at PC=30
+  INFO:root:Executing: write at PC=31
+  INFO:root:Executing: mov at PC=32
+  INFO:root:Executing: write at PC=33
+  INFO:root:Executing: mov at PC=34
+  INFO:root:Executing: write at PC=35
+  INFO:root:Executing: mov at PC=36
+  INFO:root:Executing: write at PC=37
+  INFO:root:Executing: mov at PC=38
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=42
+  INFO:root:Executing: write at PC=43
+  INFO:root:Executing: inc at PC=44
+  INFO:root:Executing: jmp at PC=45
+  INFO:root:Executing: read at PC=39
+  INFO:root:Executing: cmp at PC=40
+  INFO:root:Executing: jz at PC=41
+  INFO:root:Executing: mov at PC=47
+  INFO:root:Executing: write at PC=48
+  INFO:root:Executing: mov at PC=49
+  INFO:root:Executing: write at PC=50
+  INFO:root:Executing: mov at PC=51
+  INFO:root:Executing: write at PC=52
+  INFO:root:Executing: mov at PC=53
+  INFO:root:Executing: write at PC=54
+  INFO:root:Executing: write at PC=55
+  INFO:root:Executing: mov at PC=56
+  INFO:root:Executing: write at PC=57
+  INFO:root:Executing: mov at PC=58
+  INFO:root:Executing: write at PC=59
+  INFO:root:Executing: mov at PC=60
+  INFO:root:Executing: write at PC=61
+  INFO:root:Executing: mov at PC=62
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: write at PC=66
+  INFO:root:Executing: inc at PC=67
+  INFO:root:Executing: jmp at PC=68
+  INFO:root:Executing: mov at PC=63
+  INFO:root:Executing: cmp at PC=64
+  INFO:root:Executing: jz at PC=65
+  INFO:root:Executing: mov at PC=69
+  INFO:root:Executing: write at PC=70
+  INFO:root:Executing: halt at PC=71
+
+
+expected_output: |
+  Output from main: What is your name?
+  aleksander the great
+  
+  Hello, aleksander the great
+  !
