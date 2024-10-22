@@ -404,3 +404,33 @@ jmp label ; -> jmp 10
 - Управляющие сигналы для работы с регистрами и памятью. Реализована LRU-кэш для оптимизации операций с памятью.
 - Поддерживаются инструкции для работы с регистрами, чтением/записью данных, математическими операциями в ALU.
 - Вызовы инструкций `cmp` и установка флагов, по которым происходят условные переходы.
+
+## Тестирование
+
+Тестирование выполняется при помощи golden test-ов в формате yaml. Файлы .yml лежат в папке 
+[tests](https://github.com/vatankh/comp_arch_lab3/tree/main/tests). Тесты содержат входные данные и проверку на
+- код программы
+- машинный код
+- вывод процессора
+- журнал работы процессора
+
+**Алгоритмы и их тесты**
+
+- ```hello_user_name.asm``` - [hello_user_test.yml](https://github.com/vatankh/comp_arch_lab3/blob/main/tests/hello_user_test2.yml)
+- ```eulr.asm``` - [prob1_asm.yml](https://github.com/vatankh/comp_arch_lab3/blob/main/tests/eular_test.yml)
+
+Наиболее подробно разобран алгоритм ```hello_user_name```
+- Ввод:
+
+   `Aleksander the great`
+
+- Вывод:
+    ```
+  What is your name? 
+    Hello, Aleksander the great! 
+    ```
+- Файл с кодом - [hello_user_name.asm](https://github.com/vatankh/comp_arch_lab3/blob/main/eular.asm)
+- Журнал работы процессора - [processor.txt](https://github.com/vatankh/comp_arch_lab3/blob/main/machine/logs/processor.txt)
+
+
+Основной файл с кодом теста находится в модуле [testRunning.py](https://github.com/vatankh/comp_arch_lab3/blob/main/testRunning.py)
