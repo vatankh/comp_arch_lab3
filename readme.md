@@ -26,39 +26,43 @@ instr ::= op0
         | op3 arg
         | op4 label_name
 
+instr ::= op0
+        | op1 integer
+        | op1 char
+        | op1 address
+        | op2 address
+        | op3 arg
+        | op4 label_name
+
 op0 ::= "inc"
-      | "dec"
       | "halt"
-      | "ei"
-      | "di"
       | "pop"
       | "push"
       | "ret"
-      | "iret"
-      | "vec"
-      | "movh"
+      | "strcmp"
+      | "strcpy"
+      | "strlen"
 
-op1 ::= "store"
+op1 ::= "load"
+      | "store"
+      | "mov"
       | "add"
       | "sub"
       | "mul"
       | "div"
-      | "rem"
       | "cmp"
 
 op2 ::= "store"
 
-op3 ::= "in"
-      | "out"
-      | "timer"
-      | "sign"
+op3 ::= "read"
+      | "write"
+      | "write_num"
 
 op4 ::= "jmp"
-      | "je"
-      | "jne"
-      | "jge"
+      | "jz"
       | "call"
-      | "func"
+      | "ret"
+
 
 integer ::= [ "-" ] { <any of "0-9"> }-
 
