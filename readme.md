@@ -81,37 +81,38 @@ comment ::= ";" <any symbols except "\n">
 
 ### Операции
 
-**_Инструкции работы с данными:_**
-- `load` - загрузить данные из памяти в регистр
-- `store` - сохранить данные из регистра в память
-- `mov` - перемещение данных между регистрами
+**_Data Manipulation Instructions:_**
+- `load` - load data from memory into a register
+- `store` - store data from a register into memory
+- `mov` - move data between registers
 
-**_Арифметические инструкции:_**
-- `add` - сложить два регистра
-- `sub` - вычесть значение одного регистра из другого
-- `mul` - умножить два регистра
-- `div` - разделить одно значение регистра на другое
-- `write_num` - записать число
+**_Arithmetic Instructions:_**
+- `add` - add two register values
+- `sub` - subtract one register value from another
+- `mul` - multiply two register values
+- `div` - divide one register value by another
+- `write_num` - write a number to output
 
-**_Инструкции управления потоком:_**
-- `jmp` - безусловный переход
-- `jz` - переход при условии, если значение равно нулю
-- `call` - вызов функции
-- `ret` - возврат из функции
+**_Control Flow Instructions:_**
+- `jmp` - unconditional jump to a specified address
+- `jz` - jump if the value in the register is zero
+- `call` - call a subroutine or function
+- `ret` - return from a subroutine or function
 
-**_Инструкции ввода-вывода:_**
-- `read` - считывание данных из потока I/O
-- `write` - запись данных в поток I/O
+**_I/O Instructions:_**
+- `read` - read data from an I/O stream
+- `write` - write data to an I/O stream
 
-**_Строковые операции:_**
-- `strcmp` - сравнение двух строк
-- `strcpy` - копирование строки
-- `strlen` - получение длины строки
+**_String Operations:_**
+- `strcmp` - compare two strings
+- `strcpy` - copy a string from one location to another
+- `strlen` - get the length of a string
 
-**_Прочие операции:_**
-- `cmp` - сравнить два значения
-- `inc` - увеличить значение регистра на 1
-- `halt` - остановить процессор
+**_Other Instructions:_**
+- `cmp` - compare two values
+- `inc` - increment the value in a register by 1
+- `halt` - stop the processor
+
 
 ---
 
